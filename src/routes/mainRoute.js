@@ -1,17 +1,25 @@
-const express = require("express")
+const express = require('express')
 const route = express.Router()
+const errors = require('../strings/errors')
+const messages = require('../strings/messages')
 
-const UniversityController = require("../controllers/UniversityController")
+const UniversityController = require('../controllers/UniversityController')
 
-route.get("/", UniversityController.index)
+route.get('/', (req, res) => {
+  res.json(messages.homeMessage)
+})
 
-route.get("/details/:id", UniversityController.details)
+route.get('/search', UniversityController.index)
 
-route.put("/update/:id", UniversityController.update)
+route.get('/details/:id', UniversityController.details)
 
-route.post("/new", UniversityController.insert)
+route.put('/update/:id', UniversityController.update)
 
-route.delete("/remove/:id", UniversityController.insert)
+route.post('/new', UniversityController.insert)
 
+route.delete('/remove/:id', UniversityController.insert)
 
+route.get('*', (req, res) => {
+  res.json(errors.error404)
+})
 module.exports = route

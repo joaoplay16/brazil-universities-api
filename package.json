@@ -8,8 +8,15 @@
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js",
-    "test": "jest --coverage --no-cache NODE_ENV=test",
-    "test:watch": "npm test -- --watch "
+    "test": "jest --coverage --no-cache ",
+    "test:watch": "npm test -- --watch NODE_ENV=test",
+    "lint": "standard | snazzy",
+    "lint:fix": "standard --fix"
+  },
+  "standard": {
+    "env": [
+      "jest"
+    ]
   },
   "dependencies": {
     "chai-exclude": "^2.0.3",
@@ -23,6 +30,8 @@
   "devDependencies": {
     "chai": "^4.3.4",
     "jest-cli": "^27.0.4",
+    "snazzy": "^9.0.0",
+    "standard": "^16.0.3",
     "supertest": "^6.1.3"
   }
 }

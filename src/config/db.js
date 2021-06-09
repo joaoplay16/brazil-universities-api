@@ -1,1 +1,1 @@
-module.exports = {mongoURI: "mongodb://localhost/braziluniversitylist"}
+module.exports = { mongoURI: 'mongodb://localhost/braziluniversitylist' }
