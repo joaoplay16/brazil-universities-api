@@ -9,6 +9,7 @@ module.exports = {
   },
   async insert (req, res) {
     const university = await University.create(req.body)
+    if (!req.body.hasOwnProperty('name')) return res.json(errors.error500)
     return res.json(university)
   },
   async details (req, res) {
