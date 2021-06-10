@@ -5,7 +5,7 @@ const server = require('../index')
 const request = require('supertest')
 const messages = require('../src/strings/messages')
 
-describe('DEFAULT ROUTES TESTS', () => {
+describe('DEFAULT ROUTES', () => {
   it('Connection should return status 200', async () => {
     const response = await request(server)
       .get('/')

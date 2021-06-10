@@ -15,9 +15,9 @@ mongoose.connect(db.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
-  console.log('DB connected ')
+  // console.log('DB connected ')
 }).catch(err => {
-  console.log('DB error ' + err)
+  // console.log('DB error ' + err)
 })
 
 app.use('/', mainRoute)

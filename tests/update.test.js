@@ -3,10 +3,10 @@ const expect = require('chai').use(chaiExclude).expect
 require('../src/models/University')
 const server = require('../index')
 const request = require('supertest')
-const errors = require('../src/strings/errors')
+const { isValidMongoDbId } = require('../src/utils/validator')
 
-describe('UPDATE UNIVERSITY TESTS', () => {
-  const universityID = '60bfddf9b3c26bc6e0eefba9'
+describe('UPDATE UNIVERSITY', () => {
+  const universityID = '60c15a93c349440f80599d30'
 
   const UPDATE_ROUTE = '/update/'
 
@@ -50,16 +50,15 @@ describe('UPDATE UNIVERSITY TESTS', () => {
     expect(response.body.statusCode).to.be.equal(404)
   })
 
-  it('Id should match /^[0-9a-fA-F]{24}$/', async () => {
+  it('Should return status 404 when id is invalid', async () => {
     const wrongUniversityId = '4546546548'
 
     const response = await request(server)
       .put(`${UPDATE_ROUTE + wrongUniversityId}`)
       .send(university)
 
-    expect(!!universityID.match(/^[0-9a-fA-F]{24}$/)).to.equal(true)
-
-    expect(response.body).to.be.deep.equal(errors.error404)
+    expect(isValidMongoDbId(wrongUniversityId)).to.be.equal(false)
+    expect(response.body.statusCode).to.be.deep.equal(404)
   })
 
   it('Should return error 500 when fails', async () => {

@@ -4,7 +4,7 @@ require('../src/models/University')
 const server = require('../index')
 const request = require('supertest')
 
-describe('CREATE NEW UNIVERSITY TESTS', () => {
+describe('CREATE NEW UNIVERSITY', () => {
   const CREATE_ROUTE = '/new'
 
   const newUniversity = {

@@ -4,7 +4,7 @@ require('../src/models/University')
 const server = require('../index')
 const request = require('supertest')
 
-describe('GET ALL UNIVERSITIES TESTS', () => {
+describe('GET ALL UNIVERSITIES', () => {
   const SEARCH_ROUTE = '/search'
   it('Connection should return status 200', async () => {
     const response = await request(server)

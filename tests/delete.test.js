@@ -3,9 +3,9 @@ const expect = require('chai').use(chaiExclude).expect
 require('../src/models/University')
 const server = require('../index')
 const request = require('supertest')
-const errors = require('../src/strings/errors')
+const { isValidMongoDbId } = require('../src/utils/validator')
 
-describe('DELETE UNIVERSITY DETAILS TESTS', () => {
+describe('DELETE UNIVERSITY DETAILS', () => {
   const universityID = '60c15c987a89f10f80906402'
 
   const DELETE_ROUTE = '/remove/'
@@ -24,14 +24,13 @@ describe('DELETE UNIVERSITY DETAILS TESTS', () => {
     expect(response.type).to.be.equal('application/json')
   })
 
-  it('Id should be a valid', async () => {
+  it('Should return status 404 when id is invalid', async () => {
     const wrongUniversityId = '4546546548'
 
     const response = await request(server)
       .delete(`${DELETE_ROUTE + wrongUniversityId}`)
 
-    expect(!!universityID.match(/^[0-9a-fA-F]{24}$/)).to.equal(true)
-
+    expect(isValidMongoDbId(wrongUniversityId)).to.be.equal(false)
     expect(response.body.statusCode).to.be.equal(404)
   })
 

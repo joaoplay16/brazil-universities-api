@@ -1,10 +1,7 @@
 const mongoose = require('mongoose')
 const University = mongoose.model('University')
 const errors = require('../strings/errors')
-
-function isValidMongoDbId (id) {
-  return id.match(/^[0-9a-fA-F]{24}$/)
-}
+const { isValidMongoDbId } = require('../utils/validator')
 
 module.exports = {
 
