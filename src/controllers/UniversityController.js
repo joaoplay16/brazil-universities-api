@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 const University = mongoose.model('University')
 const errors = require('../strings/errors')
+
+function isValidMongoDbId(id){
+  return id.match(/^[0-9a-fA-F]{24}$/)
+}
+
 module.exports = {
 
   async index (req, res) {
@@ -16,7 +21,7 @@ module.exports = {
   async details (req, res) {
     const universityId = req.params.id
 
-    if (!universityId.match(/^[0-9a-fA-F]{24}$/)) return res.json(errors.error404)
+    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
 
     const university = await University.findById(universityId)
 
@@ -29,7 +34,7 @@ module.exports = {
 
     if (!req.body.hasOwnProperty('name')) return res.json(errors.error500)
 
-    if (!universityId.match(/^[0-9a-fA-F]{24}$/)) return res.json(errors.error404)
+    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
 
     const university = await University.findByIdAndUpdate(universityId, req.body, { new: true, useFindAndModify: true })
 
@@ -38,7 +43,14 @@ module.exports = {
     return res.json(errors.error404)
   },
   async delete (req, res) {
-    await University.findByIdAndRemove(req.params.id)
-    return res.send()
+    const universityId = req.params.id
+
+    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
+
+    const university = await University.findByIdAndRemove(universityId)
+
+    if (university) return res.json(university)
+
+    return res.json(errors.error404)
   }
 }

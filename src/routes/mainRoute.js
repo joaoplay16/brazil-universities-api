@@ -17,7 +17,7 @@ route.put('/update/:id', UniversityController.update)
 
 route.post('/new', UniversityController.insert)
 
-route.delete('/remove/:id', UniversityController.insert)
+route.delete('/remove/:id', UniversityController.delete)
 
 route.get('*', (req, res) => {
   res.json(errors.error404)
