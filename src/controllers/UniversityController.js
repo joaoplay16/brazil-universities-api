@@ -13,19 +13,28 @@ module.exports = {
     return res.json(university)
   },
   async details (req, res) {
-    const university_id = req.params.id
+    const universityId = req.params.id
 
-    if (!university_id.match(/^[0-9a-fA-F]{24}$/)) return res.json(errors.error404)
+    if (!universityId.match(/^[0-9a-fA-F]{24}$/)) return res.json(errors.error404)
 
-    const university = await University.findById(university_id)
+    const university = await University.findById(universityId)
 
     if (university) return res.json(university)
 
     return res.json(errors.error404)
   },
   async update (req, res) {
-    const university = await University.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    return res.json(university)
+    const universityId = req.params.id
+
+    if (!req.body.hasOwnProperty('name')) return res.json(errors.error500)
+
+    if (!universityId.match(/^[0-9a-fA-F]{24}$/)) return res.json(errors.error404)
+
+    const university = await University.findByIdAndUpdate(universityId, req.body, { new: true, useFindAndModify: true })
+
+    if (university) return res.json(university)
+
+    return res.json(errors.error404)
   },
   async delete (req, res) {
     await University.findByIdAndRemove(req.params.id)
