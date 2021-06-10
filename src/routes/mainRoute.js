@@ -22,4 +22,5 @@ route.delete('/remove/:id', UniversityController.delete)
 route.get('*', (req, res) => {
   res.json(errors.error404)
 })
+
 module.exports = route

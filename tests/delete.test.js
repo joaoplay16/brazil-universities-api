@@ -6,7 +6,7 @@ const request = require('supertest')
 const errors = require('../src/strings/errors')
 
 describe('DELETE UNIVERSITY DETAILS TESTS', () => {
-  const universityID = '60bfddf9b3c26bc6e0eefba9'
+  const universityID = '60c15c987a89f10f80906402'
 
   const DELETE_ROUTE = '/remove/'
 
@@ -23,6 +23,7 @@ describe('DELETE UNIVERSITY DETAILS TESTS', () => {
 
     expect(response.type).to.be.equal('application/json')
   })
+
   it('Id should be a valid', async () => {
     const wrongUniversityId = '4546546548'
 
@@ -33,6 +34,7 @@ describe('DELETE UNIVERSITY DETAILS TESTS', () => {
 
     expect(response.body.statusCode).to.be.equal(404)
   })
+
   it('Should return status 404 when no not found', async () => {
     const unknownUniversityId = '66bc6e0bfddf9b3c20eefba9'
 

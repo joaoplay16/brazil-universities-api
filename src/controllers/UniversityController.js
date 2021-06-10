@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const University = mongoose.model('University')
 const errors = require('../strings/errors')
 
-function isValidMongoDbId(id){
+function isValidMongoDbId (id) {
   return id.match(/^[0-9a-fA-F]{24}$/)
 }
 
@@ -10,7 +10,7 @@ module.exports = {
 
   async index (req, res) {
     const { page } = req.query
-    const universities = await University.paginate({}, {page, limit: 15 })
+    const universities = await University.paginate({}, { page, limit: 15 })
     return res.json(universities)
   },
   async insert (req, res) {
@@ -49,7 +49,7 @@ module.exports = {
 
     const university = await University.findByIdAndRemove(universityId)
 
-    if (university) return res.json(university)
+    if (university) return res.send(200)
 
     return res.json(errors.error404)
   }
