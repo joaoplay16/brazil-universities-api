@@ -4,7 +4,8 @@ const errors = require('../strings/errors')
 module.exports = {
 
   async index (req, res) {
-    const universities = await University.paginate({}, { limit: 15 })
+    const { page } = req.query
+    const universities = await University.paginate({}, {page, limit: 15 })
     return res.json(universities)
   },
   async insert (req, res) {
