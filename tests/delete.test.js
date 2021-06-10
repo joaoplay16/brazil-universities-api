@@ -23,13 +23,21 @@ describe('DELETE UNIVERSITY DETAILS TESTS', () => {
 
     expect(response.type).to.be.equal('application/json')
   })
-  it('Id should match /^[0-9a-fA-F]{24}$/', async () => {
+  it('Id should be a valid', async () => {
     const wrongUniversityId = '4546546548'
 
     const response = await request(server)
       .delete(`${DELETE_ROUTE + wrongUniversityId}`)
 
     expect(!!universityID.match(/^[0-9a-fA-F]{24}$/)).to.equal(true)
+
+    expect(response.body.statusCode).to.be.equal(404)
+  })
+  it('Should return status 404 when no not found', async () => {
+    const unknownUniversityId = '66bc6e0bfddf9b3c20eefba9'
+
+    const response = await request(server)
+      .delete(`${DELETE_ROUTE + unknownUniversityId}`)
 
     expect(response.body.statusCode).to.be.equal(404)
   })
