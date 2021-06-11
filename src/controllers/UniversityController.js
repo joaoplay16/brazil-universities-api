@@ -6,8 +6,16 @@ const { isValidMongoDbId } = require('../utils/validator')
 module.exports = {
 
   async index (req, res) {
-    const { page } = req.query
-    const universities = await University.paginate({}, { page, limit: 15 })
+    const { universityName, pageNumber, pageLimit, stateProvince } = req.query
+    const universities = await University.paginate(
+      {
+        name: { $regex: `${universityName || '.*'}`, $options: 'i' },
+        state_province: { $regex: `${stateProvince || '.*'}`, $options: 'i' }
+      },
+      {
+        page: pageNumber ? parseInt(pageNumber) : 1,
+        limit: pageLimit ? parseInt(pageLimit) : 10
+      })
     return res.json(universities)
   },
   async insert (req, res) {
