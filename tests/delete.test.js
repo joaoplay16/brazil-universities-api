@@ -6,7 +6,7 @@ const request = require('supertest')
 const { isValidMongoDbId } = require('../src/utils/validator')
 
 describe('DELETE UNIVERSITY DETAILS', () => {
-  //Subistitua por um ID existente
+  //Substitua por um ID existente
   const universityID = '60c4f9da90dc772a2c8d0c8d'
 
   const DELETE_ROUTE = '/remove/'
