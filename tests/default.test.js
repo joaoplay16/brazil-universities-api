@@ -31,6 +31,6 @@ describe('DEFAULT ROUTES', () => {
     const response = await request(server)
       .get('/unknown')
 
-    expect(response.body.statusCode).to.be.deep.equal(404)
+    expect(response.status).to.be.equal(404)
   })
 })
