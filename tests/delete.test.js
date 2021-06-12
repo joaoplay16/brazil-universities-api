@@ -6,7 +6,8 @@ const request = require('supertest')
 const { isValidMongoDbId } = require('../src/utils/validator')
 
 describe('DELETE UNIVERSITY DETAILS', () => {
-  const universityID = '60c15c987a89f10f80906402'
+  //Subistitua por um ID existente
+  const universityID = '60c4f9da90dc772a2c8d0c8d'
 
   const DELETE_ROUTE = '/remove/'
 
@@ -24,14 +25,14 @@ describe('DELETE UNIVERSITY DETAILS', () => {
     expect(response.type).to.be.equal('application/json')
   })
 
-  it('Should return status 404 when id is invalid', async () => {
+  it('Should return status 500 when id is invalid', async () => {
     const wrongUniversityId = '4546546548'
 
     const response = await request(server)
       .delete(`${DELETE_ROUTE + wrongUniversityId}`)
 
     expect(isValidMongoDbId(wrongUniversityId)).to.be.equal(false)
-    expect(response.body.statusCode).to.be.equal(404)
+    expect(response.status).to.be.equal(500)
   })
 
   it('Should return status 404 when no not found', async () => {
@@ -40,6 +41,6 @@ describe('DELETE UNIVERSITY DETAILS', () => {
     const response = await request(server)
       .delete(`${DELETE_ROUTE + unknownUniversityId}`)
 
-    expect(response.body.statusCode).to.be.equal(404)
+    expect(response.status).to.be.equal(404)
   })
 })
