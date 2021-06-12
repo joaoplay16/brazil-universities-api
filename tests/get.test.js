@@ -20,12 +20,12 @@ describe('GET ALL UNIVERSITIES', () => {
     expect(response.type).to.be.equal('application/json')
   })
 
-  it('Should return one or more results', async () => {
+  it('Should return zero or more results', async () => {
     const response = await request(server)
       .get(SEARCH_ROUTE)
 
     const document = response.body
 
-    expect(document.total).to.be.greaterThan(0)
+    expect(document.total).to.be.greaterThanOrEqual(0)
   })
 })

@@ -44,6 +44,6 @@ describe('CREATE NEW UNIVERSITY', () => {
       .post(CREATE_ROUTE)
       .send({})
 
-    expect(response.body.statusCode).to.be.equal(500)
+    expect(response.status).to.be.equal(500)
   })
 })
