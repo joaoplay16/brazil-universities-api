@@ -6,7 +6,8 @@ const request = require('supertest')
 const { isValidMongoDbId } = require('../src/utils/validator')
 
 describe('UPDATE UNIVERSITY', () => {
-  const universityID = '60c15a93c349440f80599d30'
+  //Subistitua pos um ID existente
+  const universityID = '60c4f1be3e43822a2c990055'
 
   const UPDATE_ROUTE = '/update/'
 
@@ -47,10 +48,10 @@ describe('UPDATE UNIVERSITY', () => {
       .put(`${UPDATE_ROUTE + unknownUniversityId}`)
       .send(university)
 
-    expect(response.body.statusCode).to.be.equal(404)
+    expect(response.status).to.be.equal(404)
   })
 
-  it('Should return status 404 when id is invalid', async () => {
+  it('Should return status 500 when id is invalid', async () => {
     const wrongUniversityId = '4546546548'
 
     const response = await request(server)
@@ -58,7 +59,7 @@ describe('UPDATE UNIVERSITY', () => {
       .send(university)
 
     expect(isValidMongoDbId(wrongUniversityId)).to.be.equal(false)
-    expect(response.body.statusCode).to.be.deep.equal(404)
+    expect(response.status).to.be.equal(500)
   })
 
   it('Should return error 500 when fails', async () => {
@@ -66,6 +67,6 @@ describe('UPDATE UNIVERSITY', () => {
       .put(`${UPDATE_ROUTE + universityID}`)
       .send({})
 
-    expect(response.body.statusCode).to.be.equal(500)
+    expect(response.status).to.be.equal(500)
   })
 })
