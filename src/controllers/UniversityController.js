@@ -35,12 +35,13 @@ module.exports = {
 
     if (university) return res.json(university)
 
-    return res.send(404).json(errors.error404)
+    return res.status(404).send(errors.error404)
   },
   async update (req, res) {
     const universityId = req.params.id
+    const universityToUpdate = req.body
 
-    if (!req.body.hasOwnProperty('name') || newUniversity.name === '') { return res.json(errors.error500) }
+    if (!universityToUpdate.hasOwnProperty('name') || universityToUpdate.name === '') { return res.status(500).send(errors.error500) }
 
     if (!isValidMongoDbId(universityId)) { return res.status(500).send(errors.error500) }
 
@@ -48,17 +49,17 @@ module.exports = {
 
     if (university) return res.json(university)
 
-    return res.send(404).json(errors.error404)
+    return res.status(404).send(errors.error404)
   },
   async delete (req, res) {
     const universityId = req.params.id
 
-    if (!isValidMongoDbId(universityId)) { return res.json(errors.error500) }
+    if (!isValidMongoDbId(universityId)) { return res.status(500).send(errors.error500) }
 
     const university = await University.findByIdAndRemove(universityId)
 
     if (university) return res.send(200)
 
-    return res.send(404).json(errors.error404)
+    return res.status(404).send(errors.error404)
   }
 }
