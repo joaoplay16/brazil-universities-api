@@ -6,7 +6,7 @@ const { isValidMongoDbId } = require('../utils/validator')
 module.exports = {
 
   async index (req, res) {
-    const { universityName, pageNumber, pageLimit, stateProvince } = req.query
+    const { universityName, pageNumber, pagesLimit, stateProvince } = req.query
     const universities = await University.paginate(
       {
         name: { $regex: `${universityName || '.*'}`, $options: 'i' },
@@ -14,48 +14,51 @@ module.exports = {
       },
       {
         page: pageNumber ? parseInt(pageNumber) : 1,
-        limit: pageLimit ? parseInt(pageLimit) : 10
+        limit: pagesLimit ? parseInt(pagesLimit) : 10
       })
     return res.json(universities)
   },
   async insert (req, res) {
-    const university = await University.create(req.body)
-    if (!req.body.hasOwnProperty('name')) return res.json(errors.error500)
-    return res.json(university)
+    const newUniversity = req.body
+    if (!newUniversity.hasOwnProperty('name') || newUniversity.name === '') { return res.status(500).send(errors.error500) }
+
+    const university = await University.create(newUniversity)
+
+    return res.status(201).send(university)
   },
   async details (req, res) {
     const universityId = req.params.id
 
-    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
+    if (!isValidMongoDbId(universityId)) { return res.status(500).send(errors.error500) }
 
     const university = await University.findById(universityId)
 
     if (university) return res.json(university)
 
-    return res.json(errors.error404)
+    return res.send(404).json(errors.error404)
   },
   async update (req, res) {
     const universityId = req.params.id
 
-    if (!req.body.hasOwnProperty('name')) return res.json(errors.error500)
+    if (!req.body.hasOwnProperty('name') || newUniversity.name === '') { return res.json(errors.error500) }
 
-    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
+    if (!isValidMongoDbId(universityId)) { return res.status(500).send(errors.error500) }
 
     const university = await University.findByIdAndUpdate(universityId, req.body, { new: true, useFindAndModify: true })
 
     if (university) return res.json(university)
 
-    return res.json(errors.error404)
+    return res.send(404).json(errors.error404)
   },
   async delete (req, res) {
     const universityId = req.params.id
 
-    if (!isValidMongoDbId(universityId)) return res.json(errors.error404)
+    if (!isValidMongoDbId(universityId)) { return res.json(errors.error500) }
 
     const university = await University.findByIdAndRemove(universityId)
 
     if (university) return res.send(200)
 
-    return res.json(errors.error404)
+    return res.send(404).json(errors.error404)
   }
 }
