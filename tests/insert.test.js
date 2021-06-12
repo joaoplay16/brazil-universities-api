@@ -14,12 +14,12 @@ describe('CREATE NEW UNIVERSITY', () => {
     web_pages: ['www.newuniversity.com']
   }
 
-  it('Connection should return status 200', async () => {
+  it('Connection should return status 201', async () => {
     const response = await request(server)
       .post(CREATE_ROUTE)
       .send(newUniversity)
 
-    expect(response.status).to.be.equal(200)
+    expect(response.status).to.be.equal(201)
   })
 
   it('Connection should return content-type "application/json" ', async () => {
