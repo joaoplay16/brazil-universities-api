@@ -6,7 +6,7 @@ const request = require('supertest')
 const { isValidMongoDbId } = require('../src/utils/validator')
 
 describe('GET UNIVERSITY DETAILS', () => {
-  //Substitua por um ID existente
+  // Substitua por um ID existente
   const universityId = '60c35422784dc0048cf5abce'
 
   const DETAILS_ROUTE = '/details/'
