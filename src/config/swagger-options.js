@@ -8,7 +8,10 @@ module.exports = {
     },
     servers: [
       {
-        url: 'http://localhost:8080'
+        url: `http://localhost:${process.env.SERVER_PORT}`
+      },
+      {
+        url: `https://brazil-universities-api.herokuapp.com/`
       }
     ]
   },
