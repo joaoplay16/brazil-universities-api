@@ -1,7 +1,7 @@
 {
   "name": "brasil-university-list",
   "version": "1.0.0",
-  "description": "Provides a search endpoint you can search for an autocomplete for university name",
+  "description": "Provides a search endpoint you can search for universities of Brazil",
   "main": "index.js",
   "author": "João Pedro de Freitas Brito",
   "license": "MIT",
