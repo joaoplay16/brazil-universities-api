@@ -6,10 +6,10 @@
   "author": "João Pedro de Freitas Brito",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js",
-    "test": "jest --coverage --no-cache ",
-    "test:watch": "npm test -- --watch NODE_ENV=test",
+    "dev": "cross-env NODE_ENV=test nodemon index.js ",
+    "start": "node index.js ",
+    "test": "cross-env NODE_ENV=test jest --coverage --no-cache ",
+    "test:watch": "test -- --watch",
     "lint": "standard | snazzy",
     "lint:fix": "standard --fix"
   },
@@ -32,6 +32,7 @@
   "devDependencies": {
     "axios": "^0.21.1",
     "chai": "^4.3.4",
+    "cross-env": "^7.0.3",
     "jest-cli": "^27.0.4",
     "snazzy": "^9.0.0",
     "standard": "^16.0.3",

@@ -4,7 +4,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const requireDir = require('require-dir')
 requireDir('./src/models')
-const db = require('./src/config/db')
+require('dotenv').config()
 const mainRoute = require('./src/routes/mainRoute')
 const swaggerUI = require('swagger-ui-express')
 const swaggerJsDoc = require('swagger-jsdoc')
@@ -17,7 +17,18 @@ app.use(express.urlencoded({ extended: false }))
 const specs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
 
-mongoose.connect(db.mongoURI, {
+let {NODE_ENV, MONGO_TEST_URI, MONGO_PRODUCTION_URI} = process.env
+let mongoURI = ""
+switch (NODE_ENV) {
+  case "production":
+    mongoURI = MONGO_PRODUCTION_URI
+    break
+  default:
+    mongoURI = MONGO_TEST_URI
+    break
+}
+
+mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -27,6 +38,8 @@ mongoose.connect(db.mongoURI, {
 })
 
 app.use('/', mainRoute)
+
+console.log(mongoURI);
 
 if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT || 8080, () => {
