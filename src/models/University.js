@@ -6,7 +6,8 @@ const universitySchema = new mongoose.Schema({
     type: String
   },
   state_province: {
-    type: String
+    type: String,
+    default: "Unknown"
   },
   web_pages: {
     type: [String]
