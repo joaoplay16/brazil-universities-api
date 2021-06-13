@@ -6,7 +6,7 @@
   "author": "João Pedro de Freitas Brito",
   "license": "MIT",
   "scripts": {
-    "dev": "cross-env NODE_ENV=test nodemon index.js ",
+    "dev": "cross-env NODE_ENV=devlopment nodemon index.js ",
     "start": "node index.js ",
     "test": "cross-env NODE_ENV=test jest --coverage --no-cache ",
     "test:watch": "test -- --watch",

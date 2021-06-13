@@ -39,8 +39,6 @@ mongoose.connect(mongoURI, {
 
 app.use('/', mainRoute)
 
-console.log(mongoURI);
-
 if (process.env.NODE_ENV !== 'test') {
   app.listen(process.env.PORT || 8080, () => {
   })
