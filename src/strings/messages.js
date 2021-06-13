@@ -5,6 +5,6 @@ module.exports = {
       website: 'https://github.com/joaoplay16'
     },
     github: 'https://github.com/joaoplay16/brazil-university-api',
-    example: 'http://localhost:8080/search'
+    example: 'https://brazil-universities-api.herokuapp.com/search'
   }
 }
