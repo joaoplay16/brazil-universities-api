@@ -17,18 +17,9 @@ app.use(express.urlencoded({ extended: false }))
 const specs = swaggerJsDoc(swaggerOptions)
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs))
 
-let {NODE_ENV, MONGO_TEST_URI, MONGO_PRODUCTION_URI} = process.env
-let mongoURI = ""
-switch (NODE_ENV) {
-  case "production":
-    mongoURI = MONGO_PRODUCTION_URI
-    break
-  default:
-    mongoURI = MONGO_TEST_URI
-    break
-}
+let {NODE_ENV, MONGODB_URI, SERVER_PORT, PORT} = process.env
 
-mongoose.connect(mongoURI, {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 }).then(() => {
@@ -39,8 +30,8 @@ mongoose.connect(mongoURI, {
 
 app.use('/', mainRoute)
 
-if (process.env.NODE_ENV !== 'test') {
-  app.listen(process.env.PORT || 8080, () => {
+if (NODE_ENV !== 'test') {
+  app.listen(PORT || SERVER_PORT, () => {
   })
 }
 
